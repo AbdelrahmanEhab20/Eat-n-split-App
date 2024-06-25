@@ -1,4 +1,3 @@
-import "./App.css";
 const initialFriends = [
   {
     id: 118836,
@@ -20,7 +19,45 @@ const initialFriends = [
   },
 ];
 function App() {
-  return <div></div>;
+  return (
+    <div className="app">
+      <div className="sidebar">
+        <FriendsList />
+      </div>
+    </div>
+  );
+}
+function FriendsList() {
+  const friends = initialFriends;
+  return (
+    <ul>
+      {friends.map((singleFriend) => {
+        return <SingleFriend key={singleFriend.id} friendData={singleFriend} />;
+      })}
+    </ul>
+  );
+}
+function SingleFriend({ friendData }) {
+  return (
+    <li key={friendData.id}>
+      <img src={friendData.image} alt={friendData.name} />
+      <h3>{friendData.name}</h3>
+      {friendData.balance < 0 ? (
+        <p className="red">
+          You own {friendData.name} {Math.abs(friendData.balance)}$
+        </p>
+      ) : friendData.balance > 0 ? (
+        <p className="green">
+          {friendData.name} owns you {friendData.balance}$
+        </p>
+      ) : friendData.balance === 0 ? (
+        <p>You and {friendData.name} are even</p>
+      ) : (
+        <div></div>
+      )}
+      <button className="button">Select</button>
+    </li>
+  );
 }
 
 export default App;
